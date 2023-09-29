@@ -46,27 +46,18 @@ include_directories(
   libyaml_download-prefix/src/libyaml_download/include
 )
 
-add_library(libyaml
+add_executable(${PROJECT_NAME}
+  src/main.c
   ${libyaml_src}
 )
 
-set_target_properties(libyaml
-  PROPERTIES LINK_FLAGS "-nostdlib"
-  COMPILE_FLAGS "-DNDEBUG -DYAML_VERSION_STRING='\"0.2.2\"' -DYAML_VERSION_MAJOR='0' -DYAML_VERSION_MINOR='2' -DYAML_VERSION_PATCH='2'"
-)
-
-add_executable(${PROJECT_NAME}
-  src/main.c
-)
-
 target_link_libraries(${PROJECT_NAME}
-  libyaml
   SceLibc_stub
 )
 
 set_target_properties(${PROJECT_NAME}
   PROPERTIES LINK_FLAGS "-nostdlib"
-  COMPILE_FLAGS "-D__PSP2_USER__"
+  COMPILE_FLAGS "-D__PSP2_USER__ -DNDEBUG -DYAML_VERSION_STRING='\"0.2.2\"' -DYAML_VERSION_MAJOR='0' -DYAML_VERSION_MINOR='2' -DYAML_VERSION_PATCH='2'"
 )
 
 vita_create_self(libSceYaml.suprx ${PROJECT_NAME}
